@@ -164,7 +164,7 @@ ler.selecting_n_unlensed_detectable_events(
     snr_threshold=8.0,
     resume=True,
     output_jsonfile=output_jsonfile,
-    meta_data_file=output_jsonfile,
+    meta_data_file=meta_data_file,
     detectability_condition='step_function',
     trim_to_size=False,
 )

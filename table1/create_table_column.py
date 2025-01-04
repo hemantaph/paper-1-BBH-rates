@@ -10,6 +10,6 @@ data = np.load(filename_in)
 with open(filename_out, 'w') as file:
     file.write('testing')
     file.write('\t')
-    file.write('lalala')
+    file.write('lala')
 
 file.close()

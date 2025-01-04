@@ -1,12 +1,11 @@
 import sys
+import numpy as np
 
-rate_configuration_name = sys.argv[1]
+filename_in = sys.argv[1]
 filename_out = sys.argv[2]
 
-if rate_configuration_name == 'baseline':
-    print("Chose baseline name")
-else:
-    raise ValueError("Invalid configuration name")
+# Read the npz file
+data = np.load(filename_in)
 
 with open(filename_out, 'w') as file:
     file.write('testing')

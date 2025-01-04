@@ -156,25 +156,25 @@ ler = LeR(
 )
 
 # Generate unlensed event parameters
-output_jsonfile = 'n_unlensed_param_detectable.json'
-meta_data_file='meta_unlensed.json'
+output_jsonfile_unlensed = 'n_unlensed_param_detectable.json'
+meta_data_file_unlensed='meta_unlensed.json'
 ler.selecting_n_unlensed_detectable_events(
     size=200000,
     batch_size=250000,
     snr_threshold=8.0,
     resume=True,
-    output_jsonfile=output_jsonfile,
-    meta_data_file=meta_data_file,
+    output_jsonfile=output_jsonfile_unlensed,
+    meta_data_file=meta_data_file_unlensed,
     detectability_condition='step_function',
     trim_to_size=False,
 )
 
 # getting data from json
-meta_data= get_param_from_json("./"+ler_directory+"/"+meta_data_file)
+meta_data_unlensed= get_param_from_json("./"+ler_directory+"/"+meta_data_file_unlensed)
 
 # plot the rate vs sampling size for the sake of 
 plt.figure(figsize=(6,4))
-plt.plot(meta_data['events_total'], meta_data['total_rate'], 'o-')
+plt.plot(meta_data_unlensed['events_total'], meta_data_unlensed['total_rate'], 'o-')
 plt.xlabel(r"Sampling size")
 plt.ylabel(r"Rate (per year)")
 plt.title(r"Rate vs Sampling size")
@@ -182,11 +182,27 @@ plt.grid(alpha=0.4)
 plt.savefig("./"+ler_directory+"/diagnosis01_rate_convergence.pdf", bbox_inches='tight')
 plt.close()
 
+# Add the first column (ULR/yr)
+table_column_data = {}
+table_column_data['unlensed_rate_per_year'] = meta_data_unlensed['total_rate'][-1]
 
+# Get the lensed events per year next
+output_jsonfile_lensed='n_lensed_param_detectable.json'
+meta_data_file_lensed = 'meta_lensed_O4.json'
+ler.selecting_n_lensed_detectable_events(
+    size=20000,
+    batch_size=500000,
+    snr_threshold=[8.0, 8.0],
+    num_img=[1, 1],
+    resume=True,
+    detectability_condition='step_function',
+    output_jsonfile=output_jsonfile_lensed,
+    meta_data_file=meta_data_file_lensed,
+    trim_to_size=False,
+    nan_to_num=False,
+);
 
-
-
-
+# Plot the diagnostics for the lensed events
 
 
 

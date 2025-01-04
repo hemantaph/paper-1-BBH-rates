@@ -3,3 +3,4 @@ paper.pdf: paper.tex
 
 clean:
 	latexmk -C
+	rm paper.bbl

@@ -179,7 +179,7 @@ plt.xlabel(r"Sampling size")
 plt.ylabel(r"Rate (per year)")
 plt.title(r"Rate vs Sampling size")
 plt.grid(alpha=0.4)
-plt.savefig("./"+ler_directory+"/diagnosis01_rate_convergence.pdf", bbox_inches='tight')
+plt.savefig("./"+ler_directory+"/diagnosis01_rate_convergence_unlensed.pdf", bbox_inches='tight')
 plt.close()
 
 # Add the first column (ULR/yr)
@@ -203,7 +203,15 @@ ler.selecting_n_lensed_detectable_events(
 );
 
 # Plot the diagnostics for the lensed events
-
+meta_data_lensed = get_param_from_json("./"+ler_directory+"/"+meta_data_file_lensed)
+plt.figure(figsize=(6,4))
+plt.plot(meta_data_lensed['events_total'], meta_data_lensed['total_rate'], 'o-')
+plt.xlabel(r"Sampling size")
+plt.ylabel(r"Rate (per year)")
+plt.title(r"Rate vs Sampling size")
+plt.grid(alpha=0.4)
+plt.savefig("./"+ler_directory+"/diagnosis02_rate_convergence_lensed.pdf", bbox_inches='tight')
+plt.close()
 
 
 

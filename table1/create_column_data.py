@@ -179,7 +179,7 @@ plt.xlabel(r"Sampling size")
 plt.ylabel(r"Rate (per year)")
 plt.title(r"Rate vs Sampling size")
 plt.grid(alpha=0.4)
-plt.savefig("./"+ler_directory+"/rate_convergence.pdf", bbox_inches='tight')
+plt.savefig("./"+ler_directory+"/diagnosis01_rate_convergence.pdf", bbox_inches='tight')
 plt.close()
 
 

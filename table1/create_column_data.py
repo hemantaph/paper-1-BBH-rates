@@ -6,9 +6,19 @@ from astropy.cosmology import LambdaCDM
 # Import helper modules
 import sys
 import numpy as np
+import matplotlib.pyplot as plt
+import scienceplots
+plt.style.use(['science','ieee'])
 
-rate_configuration = sys.argv[1]
+if len(sys.argv) > 1:
+    rate_configuration = sys.argv[1]
+else:
+    rate_configuration = 'baseline'
+
+npool=32
+
 if rate_configuration == 'baseline':
+    # LeR configurations:
     merger_rate_density = {'R0': 2.39e-08, 'b2': 1.6, 'b3': 2.0, 'b4': 30 }
     merger_rate_density_name = 'merger_rate_density_bbh_popI_II_oguri2018'
     source_frame_masses = {
@@ -25,8 +35,9 @@ if rate_configuration == 'baseline':
 else:
     raise ValueError("Invalid configuration name")
 
+# Load LeR and compute all the SNRs etc
 ler = LeR(
-    npool=8, # number of processors to use
+    npool=npool, # number of processors to use
     z_min=0.0, # minimum redshift
     z_max=10.0, # maximum redshift
     event_type='BBH', # event type
@@ -138,12 +149,38 @@ ler = LeR(
     snr_type = 'interpolation',
     psds = psds,
     ifos = ifos,
-    interpolator_dir = './interpolator_pickle',
+    interpolator_dir = interpolator_directory,
     # gwsnr_verbose = True,
     # multiprocessing_verbose = True,
     mtot_cut = True,
 )
 
+# Generate unlensed event parameters
+output_jsonfile = 'n_unlensed_param_detectable.json'
+meta_data_file='meta_unlensed.json'
+ler.selecting_n_unlensed_detectable_events(
+    size=200000,
+    batch_size=250000,
+    snr_threshold=8.0,
+    resume=True,
+    output_jsonfile=output_jsonfile,
+    meta_data_file=output_jsonfile,
+    detectability_condition='step_function',
+    trim_to_size=False,
+)
+
+# getting data from json
+meta_data= get_param_from_json("./"+ler_directory+"/"+meta_data_file)
+
+# plot the rate vs sampling size for the sake of 
+plt.figure(figsize=(6,4))
+plt.plot(meta_data['events_total'], meta_data['total_rate'], 'o-')
+plt.xlabel(r"Sampling size")
+plt.ylabel(r"Rate (per year)")
+plt.title(r"Rate vs Sampling size")
+plt.grid(alpha=0.4)
+plt.savefig("./"+ler_directory+"/rate_convergence.pdf", bbox_inches='tight')
+plt.close()
 
 
 
@@ -176,15 +213,11 @@ ler = LeR(
 
 
 
+# # npz file to be created
+# filename_out = sys.argv[2]
 
+# x = np.arange(10)
 
-
-
-# npz file to be created
-filename_out = sys.argv[2]
-
-x = np.arange(10)
-
-# Save the data
-np.savez(filename_out, x)
+# # Save the data
+# np.savez(filename_out, x)
 

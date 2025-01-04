@@ -9,6 +9,8 @@ else:
     raise ValueError("Invalid configuration name")
 
 with open(filename_out, 'w') as file:
-    file.write('testing lalala')
+    file.write('testing')
+    file.write('\t')
+    file.write('lalala')
 
 file.close()

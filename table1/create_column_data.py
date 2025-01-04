@@ -188,7 +188,7 @@ table_column_data['unlensed_rate_per_year'] = meta_data_unlensed['total_rate'][-
 
 # Get the lensed events per year next
 output_jsonfile_lensed='n_lensed_param_detectable.json'
-meta_data_file_lensed = 'meta_lensed_O4.json'
+meta_data_file_lensed = 'meta_lensed.json'
 ler.selecting_n_lensed_detectable_events(
     size=10000,
     batch_size=500000,
@@ -213,12 +213,28 @@ plt.grid(alpha=0.4)
 plt.savefig("./"+ler_directory+"/diagnosis02_rate_convergence_lensed.pdf", bbox_inches='tight')
 plt.close()
 
+table_column_data['lensed_rate_per_year'] = meta_data_lensed['total_rate'][-1]
+table_column_data['relative_rate'] = meta_data_unlensed['total_rate'][-1]/meta_data_lensed['total_rate'][-1]
 
+# Get the lensed parameters
+lensed_params = get_param_from_json(ler_directory+"/"+output_jsonfile_lensed)
 
+# Get the number of images above snr threshold of 8:
+n_images =np.sum(lensed_params['optimal_snr_net']>8, axis=1)
 
+table_column_data['2_images_fraction'] = np.sum(n_images==2)/float(len(n_images))
+table_column_data['3_images_fraction'] = np.sum(n_images==3)/float(len(n_images))
+table_column_data['4_images_fraction'] = np.sum(n_images==4)/float(len(n_images))
 
+# Check how many events have magnification larger than a given value
+magnifications = lensed_params['magnifications']
+magnifications[np.isnan(magnifications)] == 0 # Clear nans
+magnifications_abs_total = np.sum(np.abs(magnifications), axis=1)
 
-
+# Magnifications above 40, 100, 1000
+table_column_data['mu_bigger_than_40'] = np.sum(magnifications_abs_total > 40)/float(len(magnifications_abs_total))
+table_column_data['mu_bigger_than_100'] = np.sum(magnifications_abs_total > 100)/float(len(magnifications_abs_total))
+table_column_data['mu_bigger_than_1000'] = np.sum(magnifications_abs_total > 1000)/float(len(magnifications_abs_total))
 
 
 

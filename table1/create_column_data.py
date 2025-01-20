@@ -236,7 +236,7 @@ table_column_data['mu_bigger_than_40'] = np.sum(magnifications_abs_total > 40)/f
 table_column_data['mu_bigger_than_100'] = np.sum(magnifications_abs_total > 100)/float(len(magnifications_abs_total))
 table_column_data['mu_bigger_than_1000'] = np.sum(magnifications_abs_total > 1000)/float(len(magnifications_abs_total))
 
-
+# FIXME: UL vs L pop overlap; \Delta t (90% confidence interval), \Delta t_min (shortest time delay) (90% confidence interval)
 
 
 

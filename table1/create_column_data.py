@@ -159,7 +159,7 @@ ler = LeR(
 output_jsonfile_unlensed = 'n_unlensed_param_detectable.json'
 meta_data_file_unlensed='meta_unlensed.json'
 ler.selecting_n_unlensed_detectable_events(
-    size=200000,
+    size=50000,
     batch_size=250000,
     snr_threshold=8.0,
     resume=True,
@@ -190,7 +190,7 @@ table_column_data['unlensed_rate_per_year'] = meta_data_unlensed['total_rate'][-
 output_jsonfile_lensed='n_lensed_param_detectable.json'
 meta_data_file_lensed = 'meta_lensed_O4.json'
 ler.selecting_n_lensed_detectable_events(
-    size=20000,
+    size=10000,
     batch_size=500000,
     snr_threshold=[8.0, 8.0],
     num_img=[1, 1],

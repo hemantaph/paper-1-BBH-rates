@@ -1,74 +1,156 @@
-\documentclass[linenumbers]{aastex631}
+\documentclass[aps,prd,twocolumn,superscriptaddress,groupedaddress,nofootinbib,showpacs,eqsecnum,useAms]{revtex4-1}
+
+\usepackage{hyperref}
+\usepackage{epsfig}
+\usepackage{mathtools}
+\usepackage{verbatim}
+\usepackage{euscript,graphicx}
+\usepackage{amsthm,dsfont,amsfonts,amsmath,amssymb}
+\usepackage{euscript, color, fontenc, textcomp,relsize}
+\usepackage{bm, url, float, cleveref}
+\usepackage{color,soul}
+\usepackage[caption=false]{subfig}
+\usepackage[utf8]{inputenc}
+
+\bibliographystyle{apsrev}
 
 
-\newcommand{\vdag}{(v)^\dagger}
-\newcommand\aastex{AAS\TeX}
-\newcommand\latex{La\TeX}
+\allowdisplaybreaks
 
 \begin{document}
 
-\title{Strong gravitational-wave lensing forecasts}
+\preprint{APS/123-QED}
 
+\title{ 
+Rates of Strong Gravitational Lensing in the Illustris Simulation
+}
 
-\author[0000-0002-0786-7307]{test}
-\affiliation{test}
+\author{Phurailatpam Hemantakumar,$^{1}$, Otto Akseli Hannuksela$^{1}$}
+\affiliation{$^{1}$ Department of Physics, The Chinese University of Hong Kong, Shatin, New Territories, Hong Kong.} 
 
-
+\date{\today}
 \begin{abstract}
-This is an abstract
+  Rates
 \end{abstract}
+  
+\maketitle
 
-\keywords{TODO}
+\section{\label{sec:level1}Introduction}
 
+Test 
 
-\section{Introduction} \label{sec:intro}
-
+\newpage
 
 \section{Results}
 
+Test.
 
-\begin{figure}
-  \centering
-  \includegraphics[height=.34\textheight]{figures/velocity_dispersion.png}\includegraphics[height=.34\textheight]{figures/optical_depth.png}
-  \caption{
-    \emph{Left panel:} Number density of galaxies as a function of the velocity dispersion. % Context
-    % Content
-    The \emph{Choi} distribution (blue) is derived from the SDSS galaxy catalog and includes a fit to the early-type galaxies. 
-    The others (\emph{Bernardi}, \emph{Oguri}, \emph{Wempe}) shown in orange, green, red, purple, and brown include all types of galaxies, with slight differences in how the velocity dispersion is modelled as a function of redshift (green to purple) and in the cosmological model choice (brown). 
-    The velocity dispersion evolution is derived from a fit to the evolution of the velocity dispersion as predicted by the Illustris simulations; the effect of redshift is illustrated in green to brown. 
-    % Conclusion
-    The \emph{Oguri} and \emph{Wempe} reduce to \emph{Bernardi} at low redshift because they are extrapolated from the \emph{Bernardi} local fit to the velocity dispersion profiles. 
-    Furthermore, galaxy number density is suppressed at higher redshifts. 
-    Finally, the early-type galaxies peak at around 120 km/s. 
-    \emph{Right panel:} Strong lensing optical depth as a function of the source redshift. % Context
-    % Content 
-    The optical depth is estimated from the same models as those used in the left panel. 
-    The main differences between the optical depth estimates beyond the model velocity dispersion choice is the lens model choice (spherically symmetric singular isothermal sphere SIS, a singular isothermal ellipsoid SIE, and an elliptical power-law with shear EPL). 
-    % Conclusion
-    The model choice between an SIS and SIE lens (brown vs purple) does not significantly alter the optical depth (differences at percentage level), 
-    while the use of an EPL model with shear has a more significant ($\sim 20-30\,\%$) effect on the optical depth. 
-    Furthermore, the choice of the velocity dispersion function has a similar ($\sim 20-50\,\%$) effect, with velocity dispersion profiles with all-type galaxies producing more significant optical depths, and including the suppression of galaxy number densities at high redshift reduces the optical depth. 
-    Cosmological model has little effect on either the velocity dispersion profile or the optical depth.
-  }
-  \label{fig:optical_depth_summary}
-\end{figure}
-
-
-\begin{acknowledgments}
-We thank all the people that have made this AASTeX what it is today.  This
-includes but not limited to Bob Hanisch, Chris Biemesderfer, Lee Brotzman,
-Pierre Landau, Arthur Ogawa, Maxim Markevitch, Alexey Vikhlinin and Amy
-Hendrickson. Also special thanks to David Hogg and Daniel Foreman-Mackey
-for the new "modern" style design. Considerable help was provided via bug
-reports and hacks from numerous people including Patricio Cubillos, Alex
-Drlica-Wagner, Sean Lake, Michele Bannister, Peter Williams, and Jonathan
-Gagne.
-\end{acknowledgments}
-
-
-\bibliography{bibliography}{}
-\bibliographystyle{aasjournal}
+\begin{widetext}
+\begin{figure*}[ht!]
+    \centering
+    \subfloat[\centering]{{\includegraphics[width=8.52cm]{figures/velocity_dispersion_distribution.pdf} }}%
+    \qquad
+    \subfloat[\centering]{{\includegraphics[width=8.52cm]{figures/optical_depth_comparison.pdf} }}%
+    \caption{\emph{Left panel:} Number density of galaxies as a function of the velocity dispersion, weighted by $\sigma^4$. % Context
+      % Content
+      The \emph{Choi} distribution (blue) is derived from the SDSS galaxy catalog and includes a fit to the early-type galaxies. 
+      The others (\emph{Bernardi}, \emph{Oguri}, \emph{Wempe}) shown in orange, green, red, purple, and brown include all types of galaxies, with slight differences in how the velocity dispersion is modelled as a function of redshift (green to purple) and in the cosmological model choice (brown). 
+      The velocity dispersion evolution is derived from a fit to the evolution of the velocity dispersion as predicted by the Illustris simulations; the effect of redshift is illustrated in green to brown. 
+      % Conclusion
+      The \emph{Oguri} and \emph{Wempe} reduce to \emph{Bernardi} at low redshift because they are extrapolated from the \emph{Bernardi} local fit to the velocity dispersion profiles. 
+      Furthermore, galaxy number density is suppressed at higher redshifts. 
+      Finally, the early-type galaxies peak at around 120 km/s. 
+      \emph{Right panel:} Strong lensing optical depth as a function of the source redshift. % Context
+      % Content 
+      The optical depth is estimated from the same models as those used in the left panel. 
+      The main differences between the optical depth estimates beyond the model velocity dispersion choice is the lens model choice (spherically symmetric singular isothermal sphere SIS, a singular isothermal ellipsoid SIE, and an elliptical power-law with shear EPL). 
+      % Conclusion
+      The model choice between an SIS and SIE lens (brown vs purple) does not significantly alter the optical depth (differences at percentage level), 
+      while the use of an EPL model with shear has a more significant (\(\sim 20-30\,\%\)) effect on the optical depth. 
+      Furthermore, the choice of the velocity dispersion function has a similar (\(\sim 20-50\,\%\)) effect, with velocity dispersion profiles with all-type galaxies producing more significant optical depths, and including the suppression of galaxy number densities at high redshift reduces the optical depth. 
+      The cosmological model has little effect on either the velocity dispersion profile or the optical depth.}. 
+    \label{fig:optical_depth_summary}%
+\end{figure*}
+\end{widetext}
 
 
 
-\end{document}
+
+
+\newpage
+\section{Conclusions}
+
+We have shown that the strong lensing optical depth is sensitive to the choice of the velocity dispersion profile and mass density slope.
+
+
+
+
+\newpage
+
+\bibliographystyle{unsrt}
+\bibliography{bibliography}
+
+\end{document}  
+
+
+% \begin{abstract}
+% This is an abstract
+% \end{abstract}
+
+% \keywords{TODO}
+
+
+% \section{Introduction} \label{sec:intro}
+
+% \begin{align}
+%   \frac{d^2\theta}{d\lambda^2} + \Gamma^{\theta}_{\alpha\beta} \frac{d\theta^{\alpha}}{d\lambda} \frac{d\theta^{\beta}}{d\lambda} = 0
+% \end{align}
+
+
+% \section{Results}
+
+
+% \begin{figure}
+%   \centering
+%   \includegraphics[height=.34\textheight]{figures/velocity_dispersion.png}\includegraphics[height=.34\textheight]{figures/optical_depth.png}
+%   \caption{
+%     \emph{Left panel:} Number density of galaxies as a function of the velocity dispersion. % Context
+%     % Content
+%     The \emph{Choi} distribution (blue) is derived from the SDSS galaxy catalog and includes a fit to the early-type galaxies. 
+%     The others (\emph{Bernardi}, \emph{Oguri}, \emph{Wempe}) shown in orange, green, red, purple, and brown include all types of galaxies, with slight differences in how the velocity dispersion is modelled as a function of redshift (green to purple) and in the cosmological model choice (brown). 
+%     The velocity dispersion evolution is derived from a fit to the evolution of the velocity dispersion as predicted by the Illustris simulations; the effect of redshift is illustrated in green to brown. 
+%     % Conclusion
+%     The \emph{Oguri} and \emph{Wempe} reduce to \emph{Bernardi} at low redshift because they are extrapolated from the \emph{Bernardi} local fit to the velocity dispersion profiles. 
+%     Furthermore, galaxy number density is suppressed at higher redshifts. 
+%     Finally, the early-type galaxies peak at around 120 km/s. 
+%     \emph{Right panel:} Strong lensing optical depth as a function of the source redshift. % Context
+%     % Content 
+%     The optical depth is estimated from the same models as those used in the left panel. 
+%     The main differences between the optical depth estimates beyond the model velocity dispersion choice is the lens model choice (spherically symmetric singular isothermal sphere SIS, a singular isothermal ellipsoid SIE, and an elliptical power-law with shear EPL). 
+%     % Conclusion
+%     The model choice between an SIS and SIE lens (brown vs purple) does not significantly alter the optical depth (differences at percentage level), 
+%     while the use of an EPL model with shear has a more significant (\(\sim 20-30\,\%\)) effect on the optical depth. 
+%     Furthermore, the choice of the velocity dispersion function has a similar (\(\sim 20-50\,\%\)) effect, with velocity dispersion profiles with all-type galaxies producing more significant optical depths, and including the suppression of galaxy number densities at high redshift reduces the optical depth. 
+%     Cosmological model has little effect on either the velocity dispersion profile or the optical depth.
+%   }
+% \label{fig:optical_depth_summary}
+% \end{figure}
+
+
+% \begin{acknowledgments}
+% We thank all the people that have made this AASTeX what it is today.  This
+% includes but not limited to Bob Hanisch, Chris Biemesderfer, Lee Brotzman,
+% Pierre Landau, Arthur Ogawa, Maxim Markevitch, Alexey Vikhlinin and Amy
+% Hendrickson. Also special thanks to David Hogg and Daniel Foreman-Mackey
+% for the new "modern" style design. Considerable help was provided via bug
+% reports and hacks from numerous people including Patricio Cubillos, Alex
+% Drlica-Wagner, Sean Lake, Michele Bannister, Peter Williams, and Jonathan
+% Gagne. \cite{Wierda2021}
+% \end{acknowledgments}
+
+
+% \bibliography{bibliography}{}
+% \bibliographystyle{aasjournal}
+
+
+% \end{document}

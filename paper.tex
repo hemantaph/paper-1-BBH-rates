@@ -1,4 +1,4 @@
-\documentclass[aps,prd,twocolumn,superscriptaddress,groupedaddress,nofootinbib,showpacs,eqsecnum,useAms]{revtex4-1}
+\documentclass[aps,prd,twocolumn,superscriptaddress,groupedaddress,nofootinbib,showpacs,eqsecnum]{revtex4-1}
 
 \usepackage{hyperref}
 \usepackage{epsfig}
@@ -11,8 +11,9 @@
 \usepackage{color,soul}
 \usepackage[caption=false]{subfig}
 \usepackage[utf8]{inputenc}
+\usepackage{makecell}
 
-\bibliographystyle{apsrev}
+% \bibliographystyle{apsrev}
 
 
 \allowdisplaybreaks
@@ -25,7 +26,7 @@
 Rates of Strong Gravitational Lensing in the Illustris Simulation
 }
 
-\author{Phurailatpam Hemantakumar,$^{1}$, Otto Akseli Hannuksela$^{1}$}
+\author{Phurailatpam Hemantakumar$^{1}$, Otto Akseli Hannuksela$^{1}$}
 \affiliation{$^{1}$ Department of Physics, The Chinese University of Hong Kong, Shatin, New Territories, Hong Kong.} 
 
 \date{\today}
@@ -51,43 +52,555 @@ Test.
     \subfloat[\centering]{{\includegraphics[width=8.52cm]{figures/velocity_dispersion_distribution.pdf} }}%
     \qquad
     \subfloat[\centering]{{\includegraphics[width=8.52cm]{figures/optical_depth_comparison.pdf} }}%
-    \caption{\emph{Left panel:} Number density of galaxies as a function of the velocity dispersion, weighted by $\sigma^4$. % Context
-      % Content
-      The \emph{Choi} distribution (blue) is derived from the SDSS galaxy catalog and includes a fit to the early-type galaxies. 
-      The others (\emph{Bernardi}, \emph{Oguri}, \emph{Wempe}) shown in orange, green, red, purple, and brown include all types of galaxies, with slight differences in how the velocity dispersion is modelled as a function of redshift (green to purple) and in the cosmological model choice (brown). 
-      The velocity dispersion evolution is derived from a fit to the evolution of the velocity dispersion as predicted by the Illustris simulations; the effect of redshift is illustrated in green to brown. 
-      % Conclusion
-      The \emph{Oguri} and \emph{Wempe} reduce to \emph{Bernardi} at low redshift because they are extrapolated from the \emph{Bernardi} local fit to the velocity dispersion profiles. 
-      Furthermore, galaxy number density is suppressed at higher redshifts. 
-      Finally, the early-type galaxies peak at around 120 km/s. 
-      \emph{Right panel:} Strong lensing optical depth as a function of the source redshift. % Context
-      % Content 
-      The optical depth is estimated from the same models as those used in the left panel. 
-      The main differences between the optical depth estimates beyond the model velocity dispersion choice is the lens model choice (spherically symmetric singular isothermal sphere SIS, a singular isothermal ellipsoid SIE, and an elliptical power-law with shear EPL). 
-      % Conclusion
-      The model choice between an SIS and SIE lens (brown vs purple) does not significantly alter the optical depth (differences at percentage level), 
-      while the use of an EPL model with shear has a more significant (\(\sim 20-30\,\%\)) effect on the optical depth. 
-      Furthermore, the choice of the velocity dispersion function has a similar (\(\sim 20-50\,\%\)) effect, with velocity dispersion profiles with all-type galaxies producing more significant optical depths, and including the suppression of galaxy number densities at high redshift reduces the optical depth. 
-      The cosmological model has little effect on either the velocity dispersion profile or the optical depth.}. 
-    \label{fig:optical_depth_summary}%
+    \caption{\textbf{Left panel (a):} Comparison of lens galaxy number density distributions, weighted by $\sigma^4$, as a function of velocity dispersion $\sigma$. 
+    % Content
+    The \emph{Choi} (red dashed) and \emph{Bernardi} (green dashed) distributions represent fits to early-type and all-type SDSS galaxies, respectively. \emph{Oguri} models, which include all galaxy types with redshift-dependent velocity dispersion evolution from Illustris simulations, are shown for a baseline $\Lambda$CDM cosmology at $z=1$ (blue solid) and $z=6$ (blue dash-dotted), and for an alternative Planck18 cosmology at $z=6$ (orange solid). 
+    % Conclusion
+    At low redshift, \emph{Oguri} models converge with \emph{Bernardi} as they are extrapolated from local fits. Early-type lens galaxies peak at $\approx 210 \, \text{km/s}$, while local all-type lens galaxies peak at $\approx 170 \, \text{km/s}$ with a substantially higher number density. A suppression of galaxy number density at higher redshifts is observed. Our analysis is restricted to $\sigma \in [100, 400] \, \text{km/s}$, following Collett et al. (2015).
+    \textbf{Right panel (b):} Strong lensing optical depth $\tau$ versus source redshift $z_s$.
+    % Content 
+    Estimates utilize the $\sigma$ distributions from the left panel, defining the lensing cross-section as the source-plane area producing more than two images (double-image caustic region). 
+    % Conclusion
+    Variations in $\tau$ arise from: (1) The choice of lens model (e.g., Singular Isothermal Ellipsoid (SIE) versus an Elliptical Power-Law with external shear (EPL)), which introduces $\sim 11.0\%$ differences. (2) The velocity dispersion function, accounting for $\sim 40\%$ differences; functions for all galaxy types generally yield higher optical depths due to larger lens galaxy number densities. Suppressing galaxy number densities at high redshift reduces $\tau$. Cosmological model choices have a minor effect, particularly at low $z_s$ with $\sim 0.1\%$ and reaching $\sim 4\%$ differences at high $z_s$. The optical depth is notably sensitive to the assumed distribution of the lens mass density profile slope $\gamma$; a mean of $2.0$ (compared to a baseline $1.99$) with a standard deviation of $0.2$ significantly increases $\tau$ ($\sim 17\%$) by altering lensing cross-section sizes.
+    }\label{fig:optical_depth_summary}%
 \end{figure*}
 \end{widetext}
 
 
+\begin{figure}[ht!]
+  \centering
+  \hspace*{-0.02\textwidth}%
+  \includegraphics[width=8.52cm]{figures/mass_distribution.pdf}
+  \caption{Evolution of the primary mass ($m_1$) distribution $P(m_1)$ for binary black hole (BBH) mergers under two different population settings, based on GWTC-2~\cite{} and GWTC-3~\cite{} (see Table~\ref{table:GW_parameters} for model parameters).
+  \textbf{Top panel:} Intrinsic source-frame primary mass distributions ($m_1^{\text{src}}$), modeled using a PowerLaw+Peak prescription. The GWTC-3 setting (orange) predicts a higher proportion of lower-mass BBHs compared to GWTC-2 (blue).
+  \textbf{Middle panel:} Corresponding distributions for detectable unlensed events ($m_{1,\rm U}^{\rm det}$). Detection biases generally favor higher-mass systems, which produce stronger gravitational wave signals (higher SNR), shifting the distributions towards larger $m_1$ values compared to the intrinsic populations.
+  \textbf{Bottom panel:} Distributions for detectable strongly lensed events ($m_{1,\rm L}^{\rm det}$). While lensing also tends to favor intrinsically more massive sources, magnification can enhance the detectability of lower-mass events that would otherwise be too low in SNR. This results in a relative increase in detectable lower-mass lensed events compared to the unlensed population, particularly noticeable for the GWTC-3 setting (brown) due to its intrinsically larger fraction of low-mass systems compared to GWTC-2 (violet). These trends are consistent with the merger rates presented in Table~\ref{table:GW_parameters}.
+  }
+  \label{fig:tau_fedility_test}
+\end{figure}
+
+\subsection{Merger rates with from choosing different models}
+
+\begin{center}
+\begin{table}[ht!]
+\begin{tabular}{lllll}
+Model            & Unlensed & Lensed & Ratio     & Intrinsic-ratio \\
+\hline\hline
+Baseline         & 430.850  & 0.122  & 3531.557  & 820.776         \\
+Planck18         & 430.850  & 0.117  & 3682.478  & 851.776         \\
+Choi $\sigma$    & 430.850  & 0.085  & 5068.823  & 1093.127        \\
+GWTC-2 $m_1,m_2$ & 816.869  & 0.187  & 2363.791  & 820.776         \\
+SFR TD           & 568.599  & 0.168  & 3383.668  & 797.395         \\
+Low $\gamma$      & 430.850  & 0.128  & 3366.0156 & 958.703        
+\end{tabular}
+\caption{
+  This table summarizes the merger rates of strongly lensed events, unlensed events, and their ratios for different models. The merger rates are given in units of Mpc$^{-3}$ yr$^{-1}$. The intrinsic ratio represents the ratio of the merger rates of strongly lensed events to unlensed events, without considering detection.
+  }
+\end{table}
+\end{center}
+
+{\bf Inferences}
+\begin{itemize}
+  \item Baseline: From the 1-image unlensed:lensed, it is still less likely the LVK  events have lensed events.
+  \item Planck18: Minimal changes (lensed decreases) as the optical is more affected only at the higher redshift
+  \item Choi $\sigma$: Drastic changes, lensed rate decreases as the overall number of lenses decreases. Even though bigger galaxy (with higher $\sigma$) are likely to cause more lensed events, sheer number of number of galaxies in baseline leads to higher optical.
+  \item GWTC-2 $m_1,m_2$: More massive BBH leads to drastic increase in the detectable both unlensed and lensed events.
+  \item SFR TD: More number of BBH events. Less steep slope at lower redshift and more steep slope at higher redshift leads to relatively higher number of lensed events wrt unlensed events
+  \item Low $\gamma$: Lower gamma leads to lower optical depth, and smaller double caustic area. Even though lower gamma produce more lensed events reflected in ratio-all, smaller double caustic area leads to more likely hood of near caustic events and hence more magnification (hence detectable)
+\end{itemize}
 
 
+% \begingroup
+% \renewcommand{\arraystretch}{1.5} % Default value: 1
+% \begin{center}
+% \begin{table}[ht!]
+% \begin{tabular}{|l|l|p{4.5cm}|l|l|}
+% \hline\hline
+% Parameter & unit & prior & min & max \\
+% \hline
+% $m_{1,2}$        & M$_\odot$ & PowerLaw+Peak &             &          \\
+% &  & GWTC-3: $\alpha$=3.78, $\mu_g$=32.27, $\sigma_g$=3.88, $\lambda_p$=0.03, $\delta_m$=4.8, $\beta$=0.81 & 4.98            & 112.5         \\
+%         &  & GWTC-2: $\alpha$=2.63, $\mu_g$=33.07, $\sigma_g$=5.69, $\lambda_p$=0.10, $\delta_m$=4.82, $\beta$=1.26 & 4.59            & 86.22         \\
+% RA               & rad.      & uniform & 0            & $2\pi$      \\
+% Dec              & rad.      & cos     & $-\pi/2$     & $\pi/2$     \\
+% $\theta_{jn}$          & rad.      & sin     & 0            & $\pi$       \\
+% $\psi$           & rad.      & uniform & 0            & $\pi$       \\
+% $\phi$         & rad.      & uniform & 0            & $2\pi$      \\
+% \hline
+% \end{tabular}
+% \caption{This table show the parameter distribution model used in our analysis.
+% }
+% \label{table:GW_parameters}
+% \end{table}
+% \end{center}
+% \endgroup
 
 \newpage
 \section{Conclusions}
 
-We have shown that the strong lensing optical depth is sensitive to the choice of the velocity dispersion profile and mass density slope.
+We have shown that the SL optical depth is sensitive to the choice of the velocity dispersion profile and mass density slope.
+
+\newpage
+\appendix
+
+% \renewcommand{\theequation}{A\arabic{equation}} % Redefine equation numbering
+% \setcounter{equation}{0} % Reset equation counter
+
+\section{Optical depth}\label{sec:optical_depth_derivation}
+
+The optical depth for strong gravitational lensing (SL) of GWs, denoted as $P({\rm SL}|z_s)$, quantifies the probability that a GW source at redshift $z_s$ experiences SL by intervening galaxies located along the line of sight. Strong lensing occurs when a GW source and the lensing galaxy lie in the line of sight and the source is position within the double-image caustic region~\ref{sec:double_caustic} of a lens galaxy on the source plane, resulting in multiple observable images of the signal.
+
+Conceptually, the optical depth corresponds to the fraction of the sky effectively covered by the angular cross-sections of all lenses capable of inducing SL:
+\begin{align}
+\text{Optical depth of a source at redshift } z_s\notag \\
+= \frac{\text{Effective sky (angular) area for SL}}{\text{Total solid angle of the sky}}.
+\end{align}
+
+To compute this probability, one integrates the contributions from all potential lens galaxies located between the observer and the GW source at redshift $z_s$. This can be formally expressed as:
+\begin{align}
+P({\rm SL}|z_s) &= \int_{0}^{z_s} \frac{\sigma_{\rm SL}}{4\pi} , dN(z_l) \\
+&= \int_{0}^{z_s} P({\rm SL}|z_s, z_l) , dN(z_l),
+\label{eqn:optical_depth1}\end{align}
+where cross-section $\sigma_{\rm SL}$ denotes the effective angular area on the sky within which a single lens at redshift $z_l$ produces strong lensing for a source at $z_s$. The normalization by $1/(4\pi)$ converts this area into a dimensionless probability $P({\rm SL}|z_s, z_l)$, interpreted as the conditional probability that a source at $z_s$ is strongly lensed by a galaxy at $z_l$. The term $dN(z_l)$ represents the differential number of lenses within the redshift interval $dz_l$.
+
+A more detailed evaluation of the optical depth accounts for the distribution of intrinsic properties of the lens population, denoted by the set of parameters $\theta_L$ (e.g., velocity dispersion $\sigma$, axis ratio $q$, etc.) at each lens redshift $z_l$. This refinement leads to a generalized expression for the optical depth:
+\begin{align}
+P({\rm SL}|z_s) &= \int_{0}^{z_s} \int_{\theta_L} P({\rm SL}|z_s, z_l, \theta_L) \\
+                &\quad \times \frac{d^2N(z_l, \theta_L)}{dV_c \, d\theta_L} \, \frac{dV_c}{dz_l} \, dz_l \, d\theta_L,
+\label{eqn:optical_depth2}\end{align}
+where $P({\rm SL}|z_s, z_l, \theta_L)$ represents the angular lensing cross-section for a source at $z_s$ lensed by a galaxy at $z_l$ with properties $\theta_L$, normalized by the total sky solid angle $4\pi$. The term $\frac{d^2N(z_l, \theta_L)}{dV_c \, d\theta_L}$ denotes the comoving number density of lenses per unit comoving volume and per unit interval in $\theta_L$. Integration is performed over all relevant lens redshifts $z_l$ (from 0 to $z_s$) and the full parameter space of $\theta_L$, incorporating the comoving volume element $dV_c/dz_l$.
+
+We can rewrite Eq.~(\ref{eqn:optical_depth2}) in terms of marginalized form of lens distribution as, 
+
+\begin{align}
+P({\rm SL}|z_s) &= \int_{0}^{z_s} \Phi(z_l, z_s) dz_l,\\
+&= A \int_{0}^{z_s} P(z_l|z_s, {\rm SL}) \, dz_l,
+\label{eqn:optical_depth3}\end{align}
+where $A$ is a normalization constant, and $P(z_l|z_s, {\rm SL})$ is the probability distribution of lenses at redshift $z_l$ given that a source at redshift $z_s$ is strongly lensed. This form emphasizes the dependence of the optical depth on the lens redshift distribution. Consequently, $P(z_l|z_s, {\rm SL})$ can be expressed as,
+
+\begin{align}
+P(z_l|z_s, {\rm SL}) &= \frac{\Phi(z_l, z_s)}{\int_0^{z_s} \Phi(z_l, z_s) \, dz_l},\label{eqn:prob_lens_redshift}\\
+\end{align}
+
+where, $\Phi(z_l, z_s)$ is the effective lensing cross-section for lenses at redshift $z_l$, marginalized over the lens parameters $\theta_L$ and normalized by the total solid angle of the sky, and it reads,
+
+\begin{align}
+\Phi(z_l, z_s) &= \int_{\theta_L} P({\rm SL}|z_s, z_l, \theta_L) \frac{d^2N(z_l, \theta_L)}{dV_c \, d\theta_L} \frac{dV_c}{dz_l} d\theta_L.
+ \label{eqn:phi}\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Optical depth for Singular Isothermal Sphere lenses}\label{sec:sis_tau}
+
+For lens galaxies modeled by the Singular Isothermal Sphere (SIS) profile, the angular cross-section for strong lensing is given by $\sigma_{\rm SIS} = \pi \theta_E^2$, where $\theta_E$ is the Einstein radius. The corresponding conditional probability for strong lensing is then $P({\rm SL}|z_s, z_l, \theta_L) = \sigma_{\rm SIS} / 4\pi$. In the SIS model, the lens is characterized solely by its velocity dispersion $\sigma$, i.e., $\theta_L \in \{\sigma\}$. The Einstein radius is given by:
+\begin{align}
+\theta_E &= \frac{4G}{c^2} \frac{D_{ls}}{D_l D_s} \sigma^2,
+ \label{eqn:theta_E}\end{align}
+where $D_{ls}$ is the angular diameter distance between the lens and the source, $D_l$ is the angular diameter distance to the lens, and $D_s$ is the distance to the source.
+
+Following Eq.~(\ref{eqn:optical_depth3}), the optical depth for SIS lenses is then computed by integrating the effective lensing cross-section over all lens redshifts, and is given by,
+\begin{align}
+P({\rm SL}|z_s) &= \int_0^{z_s} \Phi_{\rm SIS}(z_l, z_s) \, dz_l.
+\end{align}
+
+Following Eq.~(\ref{eqn:phi}), the function $\Phi_{\rm SIS}(z_l, z_s)$ is given by,
+\begin{align}
+\Phi_{\rm SIS}(z_l, z_s) &= \int_{\sigma} \frac{\sigma_{\rm SIS}}{4\pi} \, \frac{d^2N(z_l, \sigma)}{dV_c \, d\sigma} \, \frac{dV_c}{dz_l} \, d\sigma \\
+                         &= \Delta \sigma \left\langle \frac{\sigma_{\rm SIS}}{4\pi} \, \phi(\sigma, z_l) \, \frac{dV_c}{dz_l} \right\rangle_{\sigma \in P_o(\sigma)},
+\label{eqn:phi_sis}\end{align}
+where $\Delta \sigma = \sigma_{\rm max} - \sigma_{\rm min}$ defines the range of velocity dispersion, $\phi(\sigma, z_l)$ is the comoving number density of lenses with velocity dispersion $\sigma$ at redshift $z_l$ (as defined in Sec.~\ref{sec:sigma_distribution}), and $\langle \cdots \rangle_{\sigma \in P_o(\sigma)}$ denotes an average over a uniform sampling distribution $P_o(\sigma)$. The second line in Eq.~\eqref{eqn:phi_sis} corresponds to the discrete numerical integration implemented in \texttt{ler}.
+
+An analytic expression for the strong lensing optical depth in the SIS model was presented by Haris et al.~\cite{haris2018}, incorporating a velocity dispersion function derived from SDSS early-type galaxies. The optical depth scales with the cube of the comoving source distance as
+\begin{align}
+P({\rm SL}|z_s) = \tau_0 \left( \frac{D_s}{c/H_0} \right)^3,
+\label{eqn:tau_sis_haris}\end{align}
+where $\tau_0 = 4.17 \times 10^{-6}$ is a normalization factor determined by the lens population. This form assumes a static, redshift-independent lens distribution and captures the geometric growth in lensing probability with increasing $z_s$.
+
+In \texttt{ler}, the SIS cross-section is approximated using the double-image caustic region $\sigma^{\rm DC}_{\rm SIS}$ (see Sec.~\ref{sec:double_caustic}) with appropriate settings. A comparison between the analytical expression in Eq.~\eqref{eqn:tau_sis_haris} and the numerical results from \texttt{ler} is shown in Fig.~\ref{fig:tau_fedility_test}.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Optical depth for Singular Isothermal Ellipsoid lenses}\label{sec:sie_tau_1}
+
+For lens galaxies described by the Singular Isothermal Ellipsoid (SIE) model, the strong lensing cross-section is given by $\sigma_{\rm SIE} = \sigma_{\rm SIS} \, \sigma_{\rm SIE}^{\rm cut}$, where $\sigma_{\rm SIE}^{\rm cut}$ is a dimensionless correction factor that accounts for the ellipticity of the lens. The $q$ dependent analytical form of $\sigma_{\rm SIE}^{\rm cut}$ is adopted from~\cite{feixu2022,Kormann1994}. The SIE model is parametrized by the parameters $\sigma$ and $q$. Now, the optical depth for SIE lenses, analogous to the SIS case (Sec.~\ref{sec:sis_tau}), is expressed as:
+\begin{align}
+P({\rm SL}|z_s) = \int_0^{z_s} \Phi_{\rm SIE}(z_l, z_s) \, dz_l,
+\label{eqn:sie_1}\end{align}
+with,
+\begin{align}
+\Phi_{\rm SIE}(z_l, z_s) &= \int_{\sigma,q} \frac{\sigma_{\rm SIE}}{4\pi} \, \frac{d^3N(z_l, \sigma, q)}{dV_c \, d\sigma \, dq} \, \frac{dV_c}{dz_l} \, d\sigma \, dq \\
+                         &= \int_{\sigma,q} \frac{\sigma_{\rm SIE}}{4\pi} \, P(q|\sigma) \, \frac{d^2N(z_l, \sigma)}{dV_c \, d\sigma} \, \frac{dV_c}{dz_l} \, d\sigma \, dq \\
+                         &= \Delta \sigma \left\langle \frac{\sigma_{\rm SIE}}{4\pi} \, \phi(\sigma, z_l) \, \frac{dV_c}{dz_l} \right\rangle_{q \in P(q|\sigma), \, \sigma \in P_o(\sigma)},
+\label{eqn:phi_sie}\end{align}
+where $P(q|\sigma)$ is the conditional distribution of the axis ratio $q$ given a velocity dispersion $\sigma$ (see Sec.~\ref{sec:axis_ratio_distribution}) and follows Collett et al.~\cite{Collett2015}. We assume that the comoving number density of lenses is independent of $q$, allowing $P(q|\sigma)$ to be factored out of the number density term in the second line of Eq.~\eqref{eqn:phi_sie}.
+
+In \texttt{ler}, the SIE cross-section $\sigma^{\rm DC}_{\rm SIE}$ is computed numerically using the double-image caustic region definition (see Sec.~\ref{sec:double_caustic}) for the given lensing parameters. A comparison between the numerically computed SIE optical depth and the result obtained using the analytical form of $\sigma_{\rm SIE}$ is shown in Fig.~\ref{fig:tau_fedility_test}.
+
+\begin{figure}[ht!]
+  \centering
+  \hspace*{-0.02\textwidth}%
+  \includegraphics[width=8.52cm]{figures/tau_fedility_test.pdf}
+  \caption{Strong lensing optical depth $P({\rm SL}|z_s)$ as a function of source redshift $z_s$ for SIS and SIE lenses. 
+  % content
+  The estimates assume a redshift-independent velocity dispersion distribution Choi et al.~\cite{Choi2007}, and cross-sections computed using: (1) the double-image caustic region (numerical) for SIS (blue solid), denoted as $\sigma^{\rm DC}_{\rm SIS}$; (2) the double-image caustic region (numerical) for SIE (orange solid), denoted as $\sigma^{\rm DC}_{\rm SIE}$; (3) the analytical cross-section for SIE (green dashed), defined as $\sigma_{\rm SIE} = \sigma_{\rm SIS} \sigma_{\rm SIE}^{\rm cut}$~\cite{feixu2022}; and (4) the analytical cross-section for SIS (violet dash-dotted), given by $\sigma_{\rm SIS} = \pi \theta_E^2$~\cite{haris2018}. The optical depths are computed using numerical integration as described in Secs.~\ref{sec:sis_tau} and~\ref{sec:sie_tau}, for SIS (blue solid) and SIE (orange solid, green dashed) lenses. The analytical approximation for SIS optical depth from Haris et al.~\cite{haris2018} (see Eq.~(\ref{eqn:tau_sis_haris})) is also included (violet dash-dotted). 
+  % Conclusion
+  Our SIS result is consistent with the analytical prediction, with small differences attributable to numerical approximations in the double-image caustic region. The SIE optical depths derived from numerical and analytical cross-sections are also in agreement. These results confirm the fidelity of using the double-image caustic region as a proxy for the lensing cross-section and validate the accuracy of the numerical integration technique.}
+  \label{fig:tau_fedility_test}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Double-Image Caustic region as proxy for lensing cross-section}\label{sec:double_caustic}
+
+\begin{figure*}[ht!]
+\centering
+\hspace*{-0.02\textwidth}%
+\includegraphics[width=17cm]{figures/caustic_plot.pdf}%
+%\vspace{0.02\textwidth}  % <-- Adds vertical space between the plot and caption
+\caption{%context
+Illustration of the double-image caustic (orange dashed) and quad-image caustic (green solid) in the source plane for an EPL lens model with external shear. Image configurations and their absolute magnifications $|\mu|$ are shown for source positions near the quad-image caustic boundary, demonstrating a fold configuration (left) and a cusp configuration (right). The two panels correspond to different mass density slopes: $\gamma=1.841$ (left) and $\gamma=2.139$ (right). Parameters are fixed as $\theta_E=1''$, $\gamma_1=\gamma_2=-0.05$, axis ratio $q$, and rotation angle $\phi_{\rm rot}$. The Einstein ring (blue dotted) and the region it encloses represent $\sigma_{\rm SIS} = \pi \theta_E^2$.
+%content
+The area enclosed by the double-image caustic is used to compute the lensing cross-section $\sigma^{\rm DC}_{\rm EPL}$. While the Einstein radius is fixed, this area varies with $\gamma$, as shown in the two panels. In contrast, the size of the quad-image caustic region remains relatively unchanged with varying $\gamma$.
+%conclusion
+Since the quad-image caustic is less sensitive to $\gamma$, a randomly placed source within the double-image caustic region is more likely to lie near the quad-image caustic boundary for $\gamma < 2$, leading to higher magnification and increased detection probability. The choice of $\sigma^{\rm DC}_{\rm EPL}$ directly affects optical depth estimates and, consequently, the predicted rate of strong lensing events.
+}
+\label{fig:double_caustic}
+\end{figure*}
+The strong lensing cross section for an EPL (EPL+Shear) lens model can be effectively approximated by the area of the double-image caustic region in the source plane. This area, denoted by $\sigma_{\rm EPL}^{\rm DC}$, can be numerically computed using gravitational lens modeling packages such as the Python-based \texttt{lenstronomy}. Specifically, the function \texttt{caustics\_epl\_shear} computes the boundary of the multiple-imaging region given a set of lens parameters $\theta_L = \{\sigma, q, \phi, \gamma, \gamma_1, \gamma_2\}$—representing the velocity dispersion, axis ratio, orientation angle, mass density slope, and external shear components, respectively—as well as the lens and source redshifts, $z_l$ and $z_s$..
+
+The double-image caustic region is defined as the area on the source plane within which a source is mapped into more than two lensed images. It is important to distinguish this extended multiple-imaging region from the central "diamond" or quad-image caustic, which is associated specifically with four-image configurations and is bounded by caustic curves where the point-source magnification formally diverges. The double-image caustic region subsumes the quad-image caustic as a subset. Figure~\ref{fig:double_caustic} shows the double-image caustic region (in orange) in the source plane for two EPL models that differ in their $\gamma$ values, and also displays the corresponding quad-image caustic boundaries (green). The figure further illustrates image configurations near caustics, including fold and cusp configurations, which occur when the source lies in close proximity to the quad-image caustic boundary and typically exhibit high magnifications.
+
+The slope $\gamma$ of the EPL density profile significantly influences the size of the double-image caustic region and thus the effective lensing cross section $\sigma_{\rm EPL}^{\rm DC}$. For steeper profiles ($\gamma > 2$), where $\gamma = 2$ corresponds to the isothermal case, the caustics expand, yielding a larger cross section, typically satisfying $\sigma_{\rm EPL}^{\rm DC} > \sigma_{\rm SIS}$. Conversely, for shallower profiles ($\gamma < 2$), the caustics contract, and the cross section becomes smaller, such that $\sigma_{\rm EPL}^{\rm DC} < \sigma_{\rm SIS}$. While the total area of the double-image caustic region varies appreciably with $\gamma$, the area of the quad-image caustic subregion shows comparatively less sensitivity to changes in slope.
+
+For shallower profiles ($\gamma < 2$), another consequence emerges: a randomly placed source within the double-image caustic region is statistically more likely to lie near the quad-image caustic boundary. These near-caustic positions correspond to regions of high magnification, enhancing the probability of detection of strongly lensed sources.
+
+The double-image caustic cross section $\sigma_{\rm EPL}^{\rm DC}$ also generalizes well-known analytic expressions in limiting cases. In the absence of external shear ($\gamma_1 = \gamma_2 = 0$) and for an isothermal density profile ($\gamma = 2$), the double-image caustic area reduces to the cross section of the Singular Isothermal Ellipsoid (SIE), i.e., $\sigma_{\rm SIE}^{\rm DC} = \sigma_{\rm SIE}$. Furthermore, in the case of a circular lens (axis ratio $q = 1$), this reduces further to the Singular Isothermal Sphere (SIS), with $\sigma_{\rm SIS}^{\rm DC} = \sigma_{\rm SIS}$. These special-case cross sections, $\sigma_{\rm SIE}^{\rm DC}$ and $\sigma_{\rm SIS}^{\rm DC}$, derived from the numerically computed double-image caustic area, are used for optical depth calculations in the \texttt{ler} software framework. A comparison between these numerical estimates and their analytical counterparts is shown in Fig.~\ref{fig:tau_fedility_test}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Optical Depth for the Elliptical Power-Law with External Shear Lens Model}\label{sec:sie_tau_2}
+
+For lenses described by the Elliptical Power-Law with External Shear (EPL) model, the strong lensing cross-section is given by $\sigma_{\rm EPL}=\sigma^{\rm DC}_{\rm EPL}$ (see Sec.~\ref{sec:double_caustic}). The EPL model is parametrized by the set $\theta_L = \{\sigma, q, \phi_{\rm rot}, \gamma, \gamma_1, \gamma_2\}$. The optical depth for EPL lenses is computed as
+
+\begin{align}
+P({\rm SL}|z_s) &= \int_0^{z_s} \Phi_{\rm EPL}(z_l, z_s) \, dz_l,
+\label{eqn:epl_1}
+\end{align}
+
+with
+\begin{align}
+\Phi_{\rm EPL}(z_l, z_s) &= \int_{\theta_L} \frac{\sigma_{\rm EPL}}{4\pi} \, \frac{d^nN(z_l, \theta_L)}{dV_c \, d\theta_L} \, \frac{dV_c}{dz_l} \, d\theta_L \\
+&= \int_{\sigma,q,\phi_{\rm rot},\gamma,\gamma_1,\gamma_2} \frac{\sigma^{\rm DC}_{\rm EPL}}{4\pi}\notag \\
+& \quad \times P(q|\sigma) \, P(\phi_{\rm rot}) \, P(\gamma) \, P(\gamma_1, \gamma_2)\notag \\
+& \quad \times \frac{d^2N(z_l, \sigma)}{dV_c \, d\sigma} \, \frac{dV_c}{dz_l} \, d\sigma \, dq \, d\phi_{\rm rot} \, d\gamma \, d\gamma_1 \, d\gamma_2 \\
+&= \Delta \sigma \left\langle 
+\frac{\sigma^{\rm DC}_{\rm EPL}}{4\pi} \, \phi(\sigma, z_l) \, \frac{dV_c}{dz_l} 
+\right\rangle_{\substack{
+q \in P(q|\sigma), \\
+\phi_{\rm rot} \in P(\phi_{\rm rot}), \\
+\gamma \in P(\gamma), \\
+\gamma_1, \gamma_2 \in P(\gamma_1, \gamma_2), \\
+\sigma \in P_o(\sigma)
+}}.
+\label{eqn:phi_epl}
+\end{align}
+
+For the numerical integration, which involves averaging over the lens parameter space, the parameters are sampled from their respective probability distributions: $P(q|\sigma)$, $P(\phi_{\rm rot})$, $P(\gamma)$, $P(\gamma_1, \gamma_2)$, and $P_o(\sigma)$. Except for $z_l$ and $\sigma$, the lens number density $\phi(\sigma, z_l)$ is assumed to be independent of the remaining parameters, allowing the probability distributions to be factored out of the number density term in the second line of Eq.~\eqref{eqn:phi_epl}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Derivation of Detectable GW Event Rates}\label{sec:event_rates}
+
+The following two sections present the derivation of event rates for unlensed and lensed gravitational wave (GW) events, respectively.
+
+\subsection{Unlensed Event Rates}\label{sec:unlensed_rates}
+
+The annual rate of detectable unlensed gravitational wave (GW) events, $\frac{\Delta N^{\rm obs}_{\rm U}}{\Delta t}$, can be determined by integrating the intrinsic rate of compact binary mergers across cosmic time and volume, weighted by the probability of detecting these events. This relationship can be expressed by first considering the total intrinsic merger rate per year, $\frac{\Delta N_{\rm U}}{\Delta t}$, and the average detection probability, $P({\rm obs})$, and it reads,
+
+\begin{align}
+\frac{\Delta N^{\rm obs}_{\rm U}}{\Delta t} &= \frac{\Delta N_{\rm U}}{\Delta t} \times P({\rm obs}).
+\label{eqn:unlensed_event_rate}
+\end{align}
+
+The detection probability $P({\rm obs})$ is effectively marginalized over all relevant GW source parameters and redshifts. To account explicitly for redshift dependence, the observed event rate can be written as an integral over the source redshift $z_s$, as,
+
+\begin{align}
+\frac{\Delta N^{\rm obs}_{\rm U}}{\Delta t} &= \frac{\Delta N_{\rm U}}{\Delta t} \int_{z_s} P({\rm obs}|z_s) \, P(z_s) \, dz_s,
+\label{eqn:unlensed_event_rate_z}
+\end{align}
+
+where $P({\rm obs}|z_s)$ is the conditional probability of detecting a source at redshift $z_s$, and $P(z_s)$ is the normalized redshift distribution of sources. $P(z_s)$ is derived from the intrinsic comoving merger rate density, $R_{\rm U}(z_s)$. This function, defined as $R_{\rm U}(z_s) = \frac{dN}{d\tau \, dV_c}$, describes the number of mergers per unit comoving volume per unit source-frame proper time $\tau$, and is typically reported in units of ${\rm Mpc}^{-3}\,{\rm yr}^{-1}$ (or ${\rm Gpc}^{-3}\,{\rm yr}^{-1}$) in the most literatures. The expression for $P(z_s)$ then becomes,
+
+\begin{align}
+P(z_s) &= \frac{1}{{\cal N}_{\rm U}} \frac{R_{\rm U}(z_s)}{1+z_s} \frac{dV_c}{dz_s},
+\label{eqn:unlensed_event_rate_z_2}
+\end{align}
+
+where $\frac{dV_c}{dz_s}$ is the differential comoving volume element. The factor $1/(1+z_s)$ accounts for cosmic time dilation, converting the rate from the source's proper time to the observer frame. ${\cal N}_{\rm U}$ is the normalization factor and it represents the total intrinsic merger rate per year in the detector frame, and it reads,
+
+\begin{align}
+{\cal N}_{\rm U} &= \int_{z_s} \frac{R_{\rm U}(z_s)}{1+z_s} \frac{dV_c}{dz_s} \, dz_s, \\
+&= \frac{\Delta N_{\rm U}}{\Delta t}
+\label{eqn:unlensed_event_rate_N_U_definition}
+\end{align}
+
+% \noindent \textit{Note:} The original label for this equation was \texttt{eqn:unlensed_event_rate_z_3}; it is relabeled here as \texttt{eqn:unlensed_event_rate\_N\_U\_definition} for clarity and to avoid duplication.
+
+A more complete formulation incorporates the set of relevant GW source parameters $\theta$, which typically includes component masses $(m_1, m_2)$, luminosity distance $D_L$ (determined by $z_s$), inclination angle $\theta_{\rm jn}$, orbital phase $\phi$, polarization angle $\psi$, sky location (RA, Dec), and coalescence time $t_c$. The observed event rate then becomes,
+
+\begin{align}
+\frac{\Delta N^{\rm obs}_{\rm U}}{\Delta t} &= {\cal N}_{\rm U} \int_{z_s} \int_{\theta} P({\rm obs}|z_s, \theta) \, P(z_s, \theta) \, dz_s \, d\theta.
+\end{align}
+
+To simplify the calculation and make use of the established redshift-dependent merger rate $R_{\rm U}(z_s)$, we assume that the redshift distribution is independent of the other parameters $\theta$, i.e., $P(z_s, \theta) = P(z_s) P(\theta)$. Using this factorization, the integral becomes,
+
+\begin{align}
+\frac{\Delta N^{\rm obs}_{\rm U}}{\Delta t} &= {\cal N}_{\rm U} \int_{z_s} \int_{\theta} P({\rm obs}|z_s, \theta)\, P(z_s) P(\theta) dz_s d\theta, \\
+% numerical integration over z_s and theta
+&= {\cal N}_{\rm U} \bigg\langle P({\rm obs}|z_s, \theta) \bigg\rangle_{z_s \in P(z_s), \theta \in P(\theta)}. \label{eqn:unlensed_event_rate_z_4}
+\end{align}
+
+The final expression indicates a numerical Monte Carlo integration, where $z_s$ is sampled from $P(z_s)$ (computed using Eq.~\ref{eqn:unlensed_event_rate_z_2}) and $\theta$ is sampled from the prior distributions specified in Table~\ref{table:GW_parameters}.
+
+The conditional detection probability $P({\rm obs}|z_s, \theta)$ is defined using a threshold on the optimal signal-to-noise ratio (SNR), $\rho$, of the GW signal~\cite{Allen2012}, and it reads,
+
+\begin{align}
+P({\rm obs}|z_s, \theta) &=
+\begin{cases}
+1, & \text{if } \rho(z_s, \theta) > \rho_{\rm th}, \\
+0, & \text{otherwise},
+\end{cases}
+\end{align}
+
+where $\rho(z_s, \theta)$ is the optimal SNR, which depends on redshift and source parameters. For this analysis, we adopt $\rho_{\rm th} = 8$ as the detection threshold, consistent with standard detectability criteria in the Gaussian noise regime~\cite{Wierda2021}. The SNR $\rho$ is efficiently computed using the \texttt{gwsnr} Python package~\cite{phurailatpam2025gwsnrpythonpackageefficient}.
+
+% add a table that has name of parameter, prior type, prior range,
+\begingroup
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\begin{center}
+\begin{table}[ht!]
+\begin{tabular}{|l|l|p{4.5cm}|l|l|}
+\hline\hline
+Parameter & unit & prior & min & max \\
+\hline
+$m_{1,2}$        & M$_\odot$ & PowerLaw+Peak &             &          \\
+&  & GWTC-3: $\alpha$=3.78, $\mu_g$=32.27, $\sigma_g$=3.88, $\lambda_p$=0.03, $\delta_m$=4.8, $\beta$=0.81 & 4.98            & 112.5         \\
+        &  & GWTC-2: $\alpha$=2.63, $\mu_g$=33.07, $\sigma_g$=5.69, $\lambda_p$=0.10, $\delta_m$=4.82, $\beta$=1.26 & 4.59            & 86.22         \\
+RA               & rad.      & uniform & 0            & $2\pi$      \\
+Dec              & rad.      & cos     & $-\pi/2$     & $\pi/2$     \\
+$\theta_{jn}$          & rad.      & sin     & 0            & $\pi$       \\
+$\psi$           & rad.      & uniform & 0            & $\pi$       \\
+$\phi$         & rad.      & uniform & 0            & $2\pi$      \\
+\hline
+\end{tabular}
+\caption{This table show the parameter distribution model used in our analysis.
+}
+\label{table:GW_parameters}
+\end{table}
+\end{center}
+\endgroup
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Lensed event rates}\label{sec:lensed_rates}
+
+The annual rate of detectable strongly lensed gravitational wave (GW) events, denoted $\frac{\Delta N^{\rm obs}_{\rm L}}{\Delta t}$, can be conceptually understood by relating it to the total intrinsic rate of all compact binary mergers, $\frac{\Delta N_{\rm U}}{\Delta t}$. This observed lensed rate is effectively the total intrinsic rate weighted by the joint probability that a source is both strongly lensed and subsequently detected, $P({\rm obs, SL})$. This relationship can be expressed as,
+
+\begin{align}
+\frac{\Delta N^{\rm obs}_{\rm L}}{\Delta t} 
+&= \frac{\Delta N_{\rm U}}{\Delta t} \, P({\rm obs, SL}) \nonumber \\
+&= \frac{\Delta N_{\rm U}}{\Delta t} \, P({\rm SL}) \, P({\rm obs|SL}) \nonumber \\
+&= \frac{\Delta N_{\rm L}}{\Delta t} \, P({\rm obs|SL}),
+\label{eqn:lensed_event_rate}
+\end{align}
+
+where $P({\rm SL})$ is the probability that a source undergoes strong lensing. The term $\frac{\Delta N_{\rm L}}{\Delta t} = \frac{\Delta N_{\rm U}}{\Delta t} \, P({\rm SL})$ represents the total intrinsic rate of strongly lensed mergers, irrespective of their detectability. The conditional probability $P({\rm obs|SL})$ is the likelihood that a lensed event is detected, given that strong lensing has occurred.
+
+The joint probability $P({\rm obs, SL})$ is marginalised over all relevant GW source parameters $\theta$, lens parameters $\theta_{\rm L}$, the source position relative to the lens $\beta$, and the redshifts of the source and lens, $z_s$ and $z_l$, respectively. The observed lensed event rate is therefore expressed as,
+
+\begin{align}
+&\frac{\Delta N^{\rm obs}_{\rm L}}{\Delta t} \notag\\
+&\quad = \frac{\Delta N_{\rm L}}{\Delta t} \int_{z_s} \int_{\theta} \int_{z_l} \int_{\theta_L} \int_{\beta} P({\rm obs}|{\rm SL}, z_s, \theta, z_l, \theta_L, \beta)\notag \\
+&\quad \times P(z_s, z_l, \theta, \theta_L, \beta|{\rm SL}) \, dz_s \, d\theta \, dz_l \, d\theta_L \, d\beta.
+\label{eqn:lensed_event_rate_z}
+\end{align}
+
+Here, $P({\rm obs}|{\rm SL}, z_s, \theta, z_l, \theta_{\rm L}, \beta)$ is the conditional detection probability for a given source–lens configuration, and $P(z_s, z_l, \theta, \theta_{\rm L}, \beta | {\rm SL})$ is the joint probability density function of these parameters conditioned on strong lensing. Assuming the intrinsic GW parameters $\theta$ are independent of the specific lensing configuration (once $z_s$ is given and the event is known to be lensed), this joint distribution can be decomposed using the chain rule:
+\begin{align}
+P&(z_s, z_l, \theta, \theta_L, \beta|{\rm SL})\notag \\
+&= P(\theta) \, P(z_l, \theta_L, \beta|z_s, {\rm SL}) \, P(z_s|{\rm SL}),\notag \\
+&= P(\theta) \, P(\theta_L, \beta|z_l, z_s, {\rm SL})\, P(z_l|z_s, {\rm SL}) \, P(z_s|{\rm SL}),\notag \\
+&= P(\theta) \, P(\beta|\theta_L, z_l, z_s, {\rm SL})\, P(\theta_L| z_l, z_s, {\rm SL})\notag \\ 
+&\times P(z_l|z_s, {\rm SL}) \, P(z_s|{\rm SL}).
+\label{eqn:lensed_event_rate_z_2}
+\end{align}
+Each term on the right-hand side represents a prior or a conditional probability distribution from which parameters must be sampled for numerical integration. The subsequent discussion details the formulation of these distributions.
+
+\subsubsection{Source and Lens Redshift Distributions}
+
+One key component is $P(z_s|{\rm SL})$, the normalized redshift distribution of sources that undergo strong lensing and it can be re-written using Bayes' theorem as,
+\begin{align}
+P(z_s | {\rm SL}) &= \frac{P({\rm SL} | z_s) \, P(z_s)}{P({\rm SL})},
+\end{align}
+
+where $P(z_s)$ is the intrinsic redshift distribution of all GW sources (as defined in the context of unlensed event rates), $P({\rm SL}|z_s)$ is the optical depth for strong lensing is detailed in Sec.~\ref{sec:optical_depth_derivation}. Substituting the expression for $P(z_s)$, this simplifies to,
+\begin{align}
+P(z_s | {\rm SL}) 
+&= \frac{P({\rm SL}|z_s)}{P({\rm SL})} \, \frac{\Delta t}{\Delta N_{\rm U}} \, \frac{R_{\rm U}(z_s)}{1 + z_s} \, \frac{dV_c}{dz_s} \nonumber \\
+&= \frac{1}{{\cal N}_{\rm L}} \, P({\rm SL}|z_s) \, \frac{R_{\rm U}(z_s)}{1 + z_s} \, \frac{dV_c}{dz_s}.
+\label{eqn:lensed_event_rate_z_3}
+\end{align}
+
+The normalization factor ${\cal N}_{\rm L}$ ensures that $P(z_s | {\rm SL})$ integrates to unity and is given by:
+
+\begin{align}
+{\cal N}_{\rm L} &= \int_0^{\infty} P({\rm SL}|z_s) \, \frac{R_{\rm U}(z_s)}{1 + z_s} \, \frac{dV_c}{dz_s} \, dz_s.
+\label{eqn:lensed_event_rate_z_4}
+\end{align}
+
+This constant, $\mathcal{N}_{\rm L}$, also represents the total intrinsic rate of strongly lensed events per year, $\Delta N_{\rm L} / \Delta t$. Consequently, the overall probability of strong lensing, $P({\rm SL})$, can be understood as the ratio $\mathcal{N}_{\rm L} / \mathcal{N}_{{\rm U}}$, where $\mathcal{N}_{{\rm U}}$ is the corresponding integral of the total unlensed rate density as given in Eq.~\ref{eqn:unlensed_event_rate_N_U_definition}. The optical depth $P({\rm SL}|z_s)$ is computed using Eq.~\eqref{eqn:epl_1} for the EPL lens model adopted in this study.
+
+The conditional lens redshift distribution, $P(z_l | z_s, {\rm SL})$ (detailed in Eq.~\eqref{eqn:prob_lens_redshift_common}) and scales with the effective lensing cross-section $\Phi_{{\rm EPL}}(z_l, z_s)$, which incorporates both the lensing cross-section and comoving number density. Therefore,
+
+\begin{align}
+P(z_l|z_s, {\rm SL}) \propto \Phi_{{\rm EPL}}(z_l, z_s).
+\end{align}
+
+\subsubsection{Lens Parameter Distribution and Sampling Approximation}
+
+To sample the lens parameters $\theta_{\rm L} = \{\sigma, q, \phi_{{\rm rot}}, \gamma, \gamma_1, \gamma_2\}$, the conditional probability $P(\theta_{\rm L}|z_l, z_s, {\rm SL})$ is formulated using Bayes' theorem, and it reads,
+\begin{align}
+P(\theta_{\rm L}|z_l, z_s, {\rm SL}) \propto P({\rm SL}|z_l, z_s, \theta_{\rm L}) \, P(\theta_{\rm L}|z_l, z_s),
+\label{eqn:prob_thetaL_bayes}
+\end{align}
+
+where $P(\theta_{\rm L}|z_l, z_s)$ is the intrinsic prior distribution of lens parameters (decomposable as $P(q|\sigma, z_l, z_s) P(\sigma|z_l, z_s) P(\phi_{{\rm rot}}) P(\gamma) P(\gamma_1, \gamma_2)$). The term $P({\rm SL}|z_l, z_s, \theta_{\rm L})$ signifies the probability that a specific lens with parameters $\theta_{\rm L}$ at $z_l$ strongly lenses a source at $z_s$, and it is proportional lensing crossection. For EPL lenses, it reads,
+\begin{align}
+P({\rm SL}|z_l, z_s, \theta_{\rm L}) \propto \sigma^{{\rm DC}}_{{\rm EPL}},
+\end{align}
+
+where $\sigma^{{\rm DC}}_{{\rm EPL}}$ is the double-image caustic cross-section detailed in~\ref{sec:double_caustic}. 
+This formulation allows lens parameters to be drawn from their intrinsic priors (listed in Section/Table~\ref{sec:lens_priors_table}) and rejection-sampled using the lensing cross-section. However, numerically computing $\sigma^{{\rm DC}}_{{\rm EPL}}$, for each sampled lens candidate is computationally intensive. 
+To mitigate this, the \texttt{ler} framework adopts an approximation by using the analytical SIE cross-section, $\sigma_{{\rm SIE}}$ (see Sec~\ref{sec:sie_tau_1}), as a proxy for weighting the sampling of the core lens parameters $\sigma$ and $q$. For the remaining lens parameters, dedicated distributions conditioned on strong lensing are employed: $\gamma$ is sampled from an astrophysically motivated distribution $P(\gamma|{\rm SL})$, fitted from observations of strongly lensed galaxies in SLACS~\cite{Sonnenfeld2024}; $\phi_{{\rm rot}}$ and external shear components $(\gamma_1, \gamma_2)$ are sampled from $P(\phi_{{\rm rot}}|{\rm SL})$ and $P(\gamma_1, \gamma_2|{\rm SL})$, respectively, based on toy models for strongly lensed galaxies as described in~\cite{Collett2015,Wierda2021}. This hybrid sampling strategy, similar to that used in Ref.~\cite{Wierda2021} (which employs $\sigma_{{\rm SIS}}$ instead), results in the following approximate factorization of the conditional probability of lens parameters, and Eq.~\ref{eqn:prob_thetaL_bayes} now reads,
+\begin{align}
+P&(\theta_L| z_l, z_s, {\rm SL}) \notag\\
+&= P(\sigma, q|z_l, z_s, {\rm SL}) \notag \\
+&\times \, P(\phi_{\rm rot}|{\rm SL}) \, P(\gamma|{\rm SL}) \, P(\gamma_1, \gamma_2|{\rm SL})\\
+&\propto P({\rm SL}|\sigma, q, z_l, z_s) P(q|\sigma, z_l, z_s) P(\sigma|z_l, z_s)\notag \\
+&\times \, P(\phi_{\rm rot}|{\rm SL}) \, P(\gamma|{\rm SL}) \, P(\gamma_1, \gamma_2|{\rm SL})
+\label{eqn:lensed_event_rate_z_5}
+\end{align}
+
+where,
+
+\begin{align}
+P({\rm SL}|\sigma, q, z_l, z_s) &\propto \sigma_{\rm SIE}\\
+&\propto \pi \theta_E^2 \sigma^{\rm cut}_{\rm SIE},
+\end{align}
+
+where $\sigma$ is sampled from a distribution represented by velocity dispersion function $\phi(\sigma, z_l)$ detailed in~\ref{}, and $q$ is sampled from a velocity dependent distribution $P(q|\sigma, z_l, z_s)$, we use a SDSS data fitted rayleigh distribution~\cite{Collett2015}. All the sampling distributions with their respective settings are listed in~\ref{table:}
+
+\subsubsection{Source Position Distribution, imgage properties and detection probability}
+
+The source position $\beta\in \{\beta_x, \beta_y\}$ is the angular separation between the source and the lens center, in the source plane, and it is sampled from a distribution $P(\beta|\theta_L, z_l, z_s, {\rm SL})$, and under the given SL condition it is sample uniformly within an area bounded by the double-image caustic boundary (see Sec.~\ref{sec:double_caustic}). With the sampled $\beta$, \texttt{ler} uses \texttt{lenstronomy} \cite{Birrer2018} to solve the lens equation to derive the image positions $\theta_{\rm i}$, time-delays $t_{\rm i}$, and the magnification $\mu_{\rm i}$ of each image. $t_i$ modifies GW's $t_c$ to $t_c + t_i$, and $\mu_{\rm i}$ modifies $d_L$ to $d_L /|\mu_{\rm i}|$. Then, SNR for each image is computed using the \texttt{gwsnr} package~\cite{phurailatpam2025gwsnrpythonpackageefficient}, and the detection probability is given so that it is 1 if atlesst 2 of the images cross $\rho_{\rm th}$, and 0 otherwise. The detection probability is given by,
+\begin{align}
+P&({\rm obs}|{\rm SL}, z_s, \theta, z_l, \theta_L, \beta) \notag \\
+&= P({\rm obs}|z_s,\theta,\mu_i,\Delta t_i) \notag \\
+&=
+\begin{cases}
+1 & \sum_i^{images} \Theta[\rho(z_s,\theta,\mu_i,\Delta t_i)-\rho_{th}]\ge 2, \\
+0, & \text{otherwise}.
+\end{cases}
+\end{align}
+
+\begin{widetext}
+\begingroup
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\begin{center}
+\begin{table*}[ht!]
+\begin{tabular}{|p{2cm}|l|p{6.5cm}|p{3.5cm}|c|}
+\hline\hline
+Parameter & PDF & Functional form & Settings & [min,max] (unit) \\
+\hline
+Velocity dispersion: $\sigma$ & $P(\sigma)$ & Gamma distribution fiited to SDSS data: & &  \\
+ & & $\phi_{\rm loc} = \phi_* \left( \frac{\sigma}{\sigma_*} \right)^{\alpha} 
+\exp\left[ -\left( \frac{\sigma}{\sigma_*} \right)^{\beta} \right] 
+\frac{\beta}{\Gamma(\alpha / \beta)} \frac{\mathrm{d}\sigma}{\sigma}$ &  &  \\
+& & 1. Choi et al.~\cite{Choi2007}: $\phi_{\rm loc}$ & $\phi_*$=$8.0\times10^{-3}h^3{\rm Mpc}^{-3}$, $\sigma_*$=$161 {\rm kms}^{-1}$, $\alpha$=$2.32$, $\beta$=$2.67$ & [100,200] (${\rm kms}^{-1}$) \\
+& & 2. Bernardi et al.~\cite{Bernardi2010}: $\phi_{\rm loc}$ & $\phi_*$=$1.0\times10^{-2}h^3{\rm Mpc}^{-3}$, $\sigma_*$=$120 {\rm kms}^{-1}$, $\alpha$=$2.32$, $\beta$=$2.67$ & \makecell[c]{\texttt{"}} \\
+& $P(\sigma|z_l)$ & 3. Oguri et al.~\cite{Oguri2018}: $\phi(\sigma, z_l) = \phi_{\mathrm{loc}}(\sigma) \frac{\phi_{\mathrm{hyd}}(\sigma, z_l)}{\phi_{\mathrm{hyd}}(\sigma, 0)}$ where the term in $\phi(\sigma, z_l)$ that accounts for redshift evolution follows Illustris cosmological hydrodynamical simulation~\cite{Torrey2015}. & \makecell[c]{\texttt{"}} & \makecell[c]{\texttt{"}} \\
+%
+Axis ratio: $q$ & $P(q|\sigma)$ & Rayleigh distribution fitted to SDSS data; follows~\cite{Collett2015,Wierda2021}: &  &  \\
+& & $P(1 - q \,|\, s = (A + B\sigma)) = \frac{1 - q}{s^2} \exp\left( \frac{-(1 - q)^2}{2s^2} \right)$ & $A$=$0.38$, $B$=$-0.09177$ $({\rm kms}^{-1})^{-1}$ & [0.2,1] \\
+%
+Axis rotation angle: $\phi_{\rm rot}$ & $P(\phi_{\rm rot})$ & Uniform distribution: $P(\phi_{\rm rot}) = \frac{1}{2\pi}$ &  & [0, $2\pi$] (rad)\\
+%
+$\gamma$ & $P(\gamma)$ & Infrred parent polulation of parent lens galaxies from the SLACS data~\cite{Sonnenfeld2024}: &  &  \\
+& & $P(\gamma) = \frac{1}{\sqrt{2\pi}\sigma_{\gamma}} \exp\left( -\frac{(\gamma - \mu_{\gamma})^2}{2\sigma_{\gamma}^2} \right)$ & $\mu_{\gamma}$=$1.99$, $\sigma_{\gamma}$=$0.149$ &  \\
+%
+$\gamma_1, \gamma_2$ & $P(\gamma_1, \gamma_2)$ & Uniform distribution: $P(\gamma_1, \gamma_2) = \frac{1}{\pi}$ &  & [0, 1] \\
+\hline
+\end{tabular}
+\caption{This table shows the assumed intrinsic lens population related parameter distribution model used in our analysis. 
+The first column lists the parameter name, the second column indicates the type of probability distribution function (PDF) used, the third column provides the functional form of the PDF, the fourth column specifies the settings or parameters used in the functional form, and the fifth column indicates the range of values for each parameter. The parameters are sampled from their respective distributions during the analysis.
+}
+\label{table:lens_parameters}
+\end{table*}
+\end{center}
+\endgroup
+\end{widetext}
+
+
+\begingroup
+\renewcommand{\arraystretch}{1.5} % Default value: 1
+\begin{center}
+\begin{table}[ht!]
+\begin{tabular}{l|p{3.9cm}|p{1.5cm}}
+\hline\hline
+PDF & Functional form & Settings \\
+\hline
+$P(z_l|z_s, {\rm SL})$ & Given $z_s$ and SL, the distribution follows effective cross-section given by Eq.~(\ref{eqn:phi_epl})  &  \\
+& $P(z_l|z_s, {\rm SL}) \propto \Phi_{{\rm EPL}}(z_l, z_s)$ &   \\
+%
+$P(\gamma)$ & SLACS data fitted gaussian distribution~\cite{Sonnenfeld2024}. & $\mu_{\gamma}$=$2.091$, $\sigma_{\gamma}$=$0.133$ \\
+%
+$P(\beta|\theta_L, z_l, z_s, {\rm SL})$ & Uniform distribution within the double-image caustic area. &  \\
+\hline
+\end{tabular}
+\caption{This table shows the assumed lens population related parameter distribution conditioned on strong lensing.
+}
+\label{table:GW_parameters}
+\end{table}
+\end{center}
+\endgroup
+
+\subsubsection{Numerical Integration of the Lensed Event Rate}
+
+With all component distributions specified, the integral for the observable lensed event rate (previously Eq.~\ref{eqn:lensed_event_rate_z}) can be expressed for numerical computation as an expectation value. The rate is given by ${\cal N}_{\rm L}$ (the total intrinsic rate of lensed events, as defined in Eq.~\ref{eqn:lensed_event_rate_z_4}) multiplied by the average detection probability:
+\begin{align}
+&\frac{\Delta N^{\rm obs}_{\rm L}}{\Delta t} =\notag \\
+&\; {\cal N}_{\rm L} \bigg\langle P({\rm obs}|{\rm SL}, z_s, \theta, z_l, \theta_L, \beta) \bigg\rangle_{\substack{
+z_s \in P(z_s|{\rm SL}), \\
+z_l \in P(z_l|z_s, {\rm SL}), \\
+\theta \in P(\theta), \\
+\theta_L \in P(\theta_L|z_l, z_s, {\rm SL}), \\
+\beta \in P(\beta|\theta_L, z_l, z_s, {\rm SL})
+}}.
+\label{eqn:lensed_event_rate_z_5}
+\end{align}
+
+% This notation signifies that each parameter is sampled from its respective probability distribution (e.g., intrinsic GW parameters $\theta$ from their priors $P(\theta)$) or from the derived conditional probability distributions for lensed systems.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Velocity dispersion function of galaxies}\label{sec:sigma_distribution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Distributions: Parent Vs Lensed Vs Lensed+detectable}\label{sec:}
 
 
 \newpage
 
-\bibliographystyle{unsrt}
+\bibliographystyle{apsrev4-2}
 \bibliography{bibliography}
 
 \end{document}  
@@ -129,8 +642,8 @@ We have shown that the strong lensing optical depth is sensitive to the choice o
 %     The main differences between the optical depth estimates beyond the model velocity dispersion choice is the lens model choice (spherically symmetric singular isothermal sphere SIS, a singular isothermal ellipsoid SIE, and an elliptical power-law with shear EPL). 
 %     % Conclusion
 %     The model choice between an SIS and SIE lens (brown vs purple) does not significantly alter the optical depth (differences at percentage level), 
-%     while the use of an EPL model with shear has a more significant (\(\sim 20-30\,\%\)) effect on the optical depth. 
-%     Furthermore, the choice of the velocity dispersion function has a similar (\(\sim 20-50\,\%\)) effect, with velocity dispersion profiles with all-type galaxies producing more significant optical depths, and including the suppression of galaxy number densities at high redshift reduces the optical depth. 
+%     while the use of an EPL model with shear has a more significant ($\sim 20-30\,\%$) effect on the optical depth. 
+%     Furthermore, the choice of the velocity dispersion function has a similar ($\sim 20-50\,\%$) effect, with velocity dispersion profiles with all-type galaxies producing more significant optical depths, and including the suppression of galaxy number densities at high redshift reduces the optical depth. 
 %     Cosmological model has little effect on either the velocity dispersion profile or the optical depth.
 %   }
 % \label{fig:optical_depth_summary}
